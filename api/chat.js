@@ -1,22 +1,75 @@
 export default async function handler(req, res) {
+
   if (req.method !== "POST") {
-    return res.status(405).json({ error: "Only POST allowed" });
+    return res.status(405).json({
+      error: "Method not allowed"
+    });
   }
 
-  const { message } = req.body;
+  try {
 
-  const response = await fetch("https://api.openai.com/v1/responses", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "Authorization": `Bearer ${process.env.OPENAI_API_KEY}`
-    },
-    body: JSON.stringify({
-      model: "gpt-4.1-mini",
-      input: `Ти агрономічний AI-асистент AgroDoctor AI. Відповідай українською мовою. Тема: технології захисту рослин. Питання користувача: ${message}`
-    })
-  });
+    const { message } = req.body;
 
-  const data = await response.json();
-  res.status(200).json({ answer: data.output_text });
+    const response = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${process.env.GEMINI_API_KEY}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          contents: [
+            {
+              parts: [
+                {
+                  text: `
+Ти AgroDoctor AI.
+
+Ти професійний агрономічний консультант.
+
+Відповідай українською мовою.
+
+Спеціалізація:
+- соняшник
+- кукурудза
+- пшениця
+- сорго
+- хвороби рослин
+- шкідники
+- гербіциди
+- фунгіциди
+- інсектициди
+- технології захисту рослин
+
+Питання користувача:
+
+${message}
+`
+                }
+              ]
+            }
+          ]
+        })
+      }
+    );
+
+    const data = await response.json();
+
+    const answer =
+      data?.candidates?.[0]?.content?.parts?.[0]?.text ||
+      "Не вдалося отримати відповідь.";
+
+    res.status(200).json({
+      answer
+    });
+
+  } catch (error) {
+
+    res.status(500).json({
+      answer: "Помилка сервера.",
+      error: error.message
+    });
+
+  }
+
 }
