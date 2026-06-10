@@ -1,139 +1,639 @@
+```html
 <!DOCTYPE html>
 <html lang="uk">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>AgroDoctor AI</title>
+<title>AgroDoctor AI — Технології захисту рослин</title>
 
 <style>
-.hero{
-height:600px;
-background:url('drone-field.jpg');
-background-size:cover;
-background-position:center;
-display:flex;
-flex-direction:column;
-justify-content:center;
-align-items:center;
-text-align:center;
-color:white;
+:root{
+  --green:#1f7a3f;
+  --dark:#10291b;
+  --light:#f3f8f4;
+  --white:#ffffff;
+  --gray:#5f6f64;
+  --accent:#d6f5df;
 }
 
-.hero h1{
-font-size:64px;
-margin:0;
-text-shadow:2px 2px 10px rgba(0,0,0,0.8);
+*{
+  box-sizing:border-box;
 }
 
-.hero p{
-font-size:28px;
-max-width:900px;
-text-shadow:2px 2px 10px rgba(0,0,0,0.8);
+body{
+  margin:0;
+  font-family:Arial, sans-serif;
+  background:var(--light);
+  color:var(--dark);
+}
+
+header{
+  min-height:90vh;
+  background:
+    linear-gradient(rgba(0,0,0,0.55),rgba(0,0,0,0.55)),
+    url("https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1600&q=80");
+  background-size:cover;
+  background-position:center;
+  color:white;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  padding:40px 20px;
+}
+
+header h1{
+  font-size:64px;
+  margin:0 0 20px;
+}
+
+header p{
+  font-size:26px;
+  max-width:900px;
+  line-height:1.4;
 }
 
 .btn{
-background:#4CAF50;
-color:white;
-padding:15px 30px;
-text-decoration:none;
-border-radius:8px;
-font-size:20px;
-margin-top:20px;
+  background:var(--green);
+  color:white;
+  padding:15px 28px;
+  border-radius:10px;
+  text-decoration:none;
+  font-weight:bold;
+  display:inline-block;
+  margin-top:20px;
 }
-body{
-margin:0;
-font-family:Arial,sans-serif;
-background:#f4f8f4;
-}
-
-header <section class="hero">
-
-<h1>AgroDoctor AI</h1>
-
-<p>
-Інтелектуальна платформа технологій захисту рослин
-</p>
-
-<a href="#services" class="btn">
-Отримати консультацію
-</a>
-
-</section>
 
 nav{
-background:#1b5e20;
-padding:15px;
-text-align:center;
+  position:sticky;
+  top:0;
+  z-index:10;
+  background:white;
+  padding:15px;
+  box-shadow:0 2px 10px rgba(0,0,0,0.1);
+  text-align:center;
 }
 
 nav a{
-color:white;
-text-decoration:none;
-margin:15px;
-font-weight:bold;
+  color:var(--dark);
+  text-decoration:none;
+  margin:10px 15px;
+  font-weight:bold;
 }
 
 section{
-padding:40px;
+  padding:70px 8%;
+}
+
+.section-title{
+  text-align:center;
+  font-size:38px;
+  margin-bottom:15px;
+}
+
+.section-subtitle{
+  text-align:center;
+  color:var(--gray);
+  max-width:850px;
+  margin:0 auto 45px;
+  font-size:18px;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:25px;
 }
 
 .card{
-background:white;
-padding:20px;
-margin:20px 0;
-border-radius:10px;
-box-shadow:0 2px 5px rgba(0,0,0,0.1);
+  background:white;
+  border-radius:18px;
+  overflow:hidden;
+  box-shadow:0 8px 24px rgba(0,0,0,0.08);
+  transition:0.3s;
+}
+
+.card:hover{
+  transform:translateY(-6px);
+}
+
+.card img{
+  width:100%;
+  height:190px;
+  object-fit:cover;
+}
+
+.card-content{
+  padding:24px;
+}
+
+.card h3{
+  margin-top:0;
+  color:var(--green);
+}
+
+.badge{
+  display:inline-block;
+  background:var(--accent);
+  color:var(--green);
+  padding:6px 12px;
+  border-radius:20px;
+  font-size:14px;
+  margin-bottom:10px;
+}
+
+.dark-section{
+  background:var(--dark);
+  color:white;
+}
+
+.dark-section .section-subtitle{
+  color:#c8d8cc;
+}
+
+.table-box{
+  overflow-x:auto;
+  background:white;
+  border-radius:18px;
+  padding:20px;
+  box-shadow:0 8px 24px rgba(0,0,0,0.08);
+}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+}
+
+th,td{
+  padding:14px;
+  border-bottom:1px solid #e5e5e5;
+  text-align:left;
+}
+
+th{
+  background:var(--green);
+  color:white;
+}
+
+.ai-box{
+  background:white;
+  border-radius:20px;
+  padding:25px;
+  max-width:900px;
+  margin:auto;
+  box-shadow:0 8px 24px rgba(0,0,0,0.12);
+}
+
+.chat-window{
+  height:280px;
+  overflow-y:auto;
+  background:#f5f7f5;
+  padding:15px;
+  border-radius:14px;
+  margin-bottom:15px;
+}
+
+.message{
+  padding:12px 15px;
+  margin:10px 0;
+  border-radius:12px;
+  max-width:85%;
+}
+
+.user{
+  background:var(--green);
+  color:white;
+  margin-left:auto;
+}
+
+.bot{
+  background:#e9efe9;
+  color:var(--dark);
+}
+
+.chat-controls{
+  display:flex;
+  gap:10px;
+}
+
+.chat-controls input{
+  flex:1;
+  padding:14px;
+  border:1px solid #ccc;
+  border-radius:10px;
+  font-size:16px;
+}
+
+.chat-controls button{
+  background:var(--green);
+  color:white;
+  border:0;
+  padding:14px 22px;
+  border-radius:10px;
+  cursor:pointer;
+  font-weight:bold;
+}
+
+.calculator{
+  background:white;
+  padding:25px;
+  border-radius:18px;
+  max-width:650px;
+  margin:auto;
+  box-shadow:0 8px 24px rgba(0,0,0,0.08);
+}
+
+.calculator input{
+  width:100%;
+  padding:14px;
+  margin:10px 0;
+  border:1px solid #ccc;
+  border-radius:10px;
+}
+
+.calculator button{
+  width:100%;
+  padding:14px;
+  background:var(--green);
+  color:white;
+  border:0;
+  border-radius:10px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.result{
+  margin-top:15px;
+  padding:15px;
+  background:var(--accent);
+  border-radius:10px;
+  font-weight:bold;
 }
 
 footer{
-background:#2e7d32;
-color:white;
-text-align:center;
-padding:20px;
+  background:#07150d;
+  color:white;
+  padding:40px 8%;
+  text-align:center;
 }
 
+@media(max-width:700px){
+  header h1{font-size:42px;}
+  header p{font-size:20px;}
+  nav a{display:inline-block;}
+}
 </style>
-
 </head>
 
 <body>
 
-<header>
-<h1>AgroDoctor AI</h1>
-<p>Технології захисту рослин та агрономічний ШІ-консультант</p>
-</header>
-
 <nav>
-<a href="#">Головна</a>
-<a href="#">Хвороби</a>
-<a href="#">Шкідники</a>
-<a href="#">ЗЗР</a>
-<a href="#">Консультант</a>
+  <a href="#home">Головна</a>
+  <a href="#about">Про проєкт</a>
+  <a href="#diseases">Хвороби</a>
+  <a href="#pests">Шкідники</a>
+  <a href="#protection">ЗЗР</a>
+  <a href="#crops">Культури</a>
+  <a href="#calculator">Калькулятор</a>
+  <a href="#assistant">AI-асистент</a>
+  <a href="#contacts">Контакти</a>
 </nav>
 
-<section>
+<header id="home">
+  <h1>AgroDoctor AI</h1>
+  <p>Інтелектуальна платформа технологій захисту рослин для агрономів, фермерів, науковців і консультантів</p>
+  <a href="#assistant" class="btn">Запитати AI-агронома</a>
+</header>
 
-<div class="card">
-<h2>Хвороби рослин</h2>
-<p>База знань про грибкові, бактеріальні та вірусні захворювання.</p>
-</div>
+<section id="about">
+  <h2 class="section-title">Про платформу</h2>
+  <p class="section-subtitle">
+    AgroDoctor AI — це цифрова база знань з фітопатології, ентомології, гербології, технологічних карт і систем захисту польових культур.
+  </p>
 
-<div class="card">
-<h2>Шкідники</h2>
-<p>Ідентифікація та рекомендації щодо контролю шкідників.</p>
-</div>
+  <div class="grid">
+    <div class="card">
+      <img src="https://images.unsplash.com/photo-1625246333195-78d9c38ad449?auto=format&fit=crop&w=900&q=80">
+      <div class="card-content">
+        <span class="badge">Аналітика</span>
+        <h3>Підтримка рішень</h3>
+        <p>Допомога у виборі стратегії захисту рослин на основі культури, фази розвитку, проблеми та ризиків.</p>
+      </div>
+    </div>
 
-<div class="card">
-<h2>Система захисту</h2>
-<p>Технологічні карти захисту соняшнику, кукурудзи, пшениці та сорго.</p>
-</div>
+    <div class="card">
+      <img src="https://images.unsplash.com/photo-1560493676-04071c5f467b?auto=format&fit=crop&w=900&q=80">
+      <div class="card-content">
+        <span class="badge">База знань</span>
+        <h3>Хвороби та шкідники</h3>
+        <p>Опис основних патогенів, шкідників, бур’янів та підходів до їх контролю.</p>
+      </div>
+    </div>
 
+    <div class="card">
+      <img src="https://images.unsplash.com/photo-1581093458791-9d15482442f6?auto=format&fit=crop&w=900&q=80">
+      <div class="card-content">
+        <span class="badge">AI</span>
+        <h3>Агрономічний асистент</h3>
+        <p>Демонстраційний чат-асистент для швидких консультацій щодо технологій захисту рослин.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="diseases" class="dark-section">
+  <h2 class="section-title">Хвороби рослин</h2>
+  <p class="section-subtitle">Основні групи захворювань сільськогосподарських культур.</p>
+
+  <div class="grid">
+    <div class="card">
+      <img src="https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&w=900&q=80">
+      <div class="card-content">
+        <h3>Грибкові хвороби</h3>
+        <p>Септоріоз, фузаріоз, іржа, борошниста роса, альтернаріоз, склеротиніоз.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="https://images.unsplash.com/photo-1530836369250-ef72a3f5cda8?auto=format&fit=crop&w=900&q=80">
+      <div class="card-content">
+        <h3>Бактеріальні хвороби</h3>
+        <p>Бактеріози листків, стебел і судинної системи рослин.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="https://images.unsplash.com/photo-1501004318641-b39e6451bec6?auto=format&fit=crop&w=900&q=80">
+      <div class="card-content">
+        <h3>Вірусні хвороби</h3>
+        <p>Мозаїки, карликовість, хлорози та інші вірусні ураження культур.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="pests">
+  <h2 class="section-title">Шкідники</h2>
+  <p class="section-subtitle">Ентомологічний блок для ідентифікації та контролю шкідників.</p>
+
+  <div class="grid">
+    <div class="card">
+      <img src="https://images.unsplash.com/photo-1473081556163-2a17de81fc97?auto=format&fit=crop&w=900&q=80">
+      <div class="card-content">
+        <h3>Лускокрилі</h3>
+        <p>Совки, стебловий метелик, листогризучі гусениці. Контроль — моніторинг, ЕПШ, інсектициди.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="https://images.unsplash.com/photo-1598965402089-897ce52e8355?auto=format&fit=crop&w=900&q=80">
+      <div class="card-content">
+        <h3>Сисні шкідники</h3>
+        <p>Попелиці, трипси, цикадки, кліщі. Ризик перенесення вірусів і пригнічення росту.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="https://images.unsplash.com/photo-1622383563227-04401ab4e5ea?auto=format&fit=crop&w=900&q=80">
+      <div class="card-content">
+        <h3>Ґрунтові шкідники</h3>
+        <p>Дротяники, личинки хрущів, підгризаючі совки. Важливий захист насіння та сівозміна.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="protection" class="dark-section">
+  <h2 class="section-title">Засоби захисту рослин</h2>
+  <p class="section-subtitle">Основні групи препаратів у сучасних системах захисту.</p>
+
+  <div class="table-box">
+    <table>
+      <tr>
+        <th>Група</th>
+        <th>Призначення</th>
+        <th>Приклади діючих речовин</th>
+      </tr>
+      <tr>
+        <td>Гербіциди</td>
+        <td>Контроль бур’янів</td>
+        <td>Імазамокс, трибенурон-метил, ацетохлор, метолахлор</td>
+      </tr>
+      <tr>
+        <td>Фунгіциди</td>
+        <td>Контроль хвороб</td>
+        <td>Тебуконазол, азоксистробін, протіоконазол, флутріафол</td>
+      </tr>
+      <tr>
+        <td>Інсектициди</td>
+        <td>Контроль шкідників</td>
+        <td>Лямбда-цигалотрин, ацетаміприд, хлорантраніліпрол</td>
+      </tr>
+      <tr>
+        <td>Протруйники</td>
+        <td>Захист насіння</td>
+        <td>Флудиоксоніл, металаксил-М, тіаметоксам</td>
+      </tr>
+    </table>
+  </div>
+</section>
+
+<section id="crops">
+  <h2 class="section-title">Технологічні карти культур</h2>
+  <p class="section-subtitle">Початковий набір культур для розвитку агрономічної бази знань.</p>
+
+  <div class="grid">
+    <div class="card">
+      <img src="https://images.unsplash.com/photo-1508747703725-719777637510?auto=format&fit=crop&w=900&q=80">
+      <div class="card-content">
+        <h3>Соняшник</h3>
+        <p>Гербіцидний захист, контроль вовчка, фомозу, фомопсису, склеротиніозу та совок.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&w=900&q=80">
+      <div class="card-content">
+        <h3>Пшениця</h3>
+        <p>Захист від бур’янів, септоріозу, іржі, фузаріозу колосу та шкідників зернових.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="https://images.unsplash.com/photo-1605000797499-95a51c5269ae?auto=format&fit=crop&w=900&q=80">
+      <div class="card-content">
+        <h3>Кукурудза</h3>
+        <p>Контроль бур’янів, стеблового метелика, сажкових хвороб і листкових плямистостей.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="https://images.unsplash.com/photo-1598514982901-ae62764ae75e?auto=format&fit=crop&w=900&q=80">
+      <div class="card-content">
+        <h3>Сорго</h3>
+        <p>Технології вирощування, контроль бур’янів, шкідників і стресових факторів у посушливих умовах.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="calculator">
+  <h2 class="section-title">Калькулятор робочого розчину</h2>
+  <p class="section-subtitle">Простий інструмент для розрахунку потреби препарату на площу.</p>
+
+  <div class="calculator">
+    <label>Площа, га</label>
+    <input type="number" id="area" placeholder="Наприклад: 50">
+
+    <label>Норма препарату, л/га або кг/га</label>
+    <input type="number" id="rate" placeholder="Наприклад: 1.2">
+
+    <button onclick="calculateProduct()">Розрахувати</button>
+
+    <div class="result" id="calcResult">Результат з’явиться тут</div>
+  </div>
+</section>
+
+<section id="assistant" class="dark-section">
+  <h2 class="section-title">AI-агроном</h2>
+  <p class="section-subtitle">
+    Демонстраційний асистент. У майбутньому його можна підключити до OpenAI API або власної бази знань.
+  </p>
+
+  <div class="ai-box">
+    <div class="chat-window" id="chatWindow">
+      <div class="message bot">
+        Вітаю. Я AgroDoctor AI. Запитайте про хвороби, шкідників, гербіциди, фунгіциди або технологію захисту культур.
+      </div>
+    </div>
+
+    <div class="chat-controls">
+      <input type="text" id="userInput" placeholder="Наприклад: Що робити, якщо совка пошкоджує соняшник?">
+      <button onclick="sendMessage()">Надіслати</button>
+    </div>
+  </div>
+</section>
+
+<section id="contacts">
+  <h2 class="section-title">Контакти</h2>
+  <p class="section-subtitle">Платформа може бути розширена до консультаційного сервісу, блогу або комерційного агропорталу.</p>
+
+  <div class="grid">
+    <div class="card">
+      <div class="card-content">
+        <h3>Консультації</h3>
+        <p>Агрономічний супровід, аудит технології, захист рослин, польова діагностика.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-content">
+        <h3>Наука</h3>
+        <p>Методики, дослідження, селекція, сорго, польові досліди, технологічні карти.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-content">
+        <h3>Email</h3>
+        <p>Додайте тут вашу робочу електронну пошту або форму заявки.</p>
+      </div>
+    </div>
+  </div>
 </section>
 
 <footer>
-© 2026 AgroDoctor AI
+  <h3>AgroDoctor AI</h3>
+  <p>© 2026. Інтелектуальна платформа технологій захисту рослин.</p>
 </footer>
+
+<script>
+function calculateProduct(){
+  let area = document.getElementById("area").value;
+  let rate = document.getElementById("rate").value;
+
+  if(area <= 0 || rate <= 0){
+    document.getElementById("calcResult").innerHTML = "Введіть коректну площу та норму препарату.";
+    return;
+  }
+
+  let result = area * rate;
+  document.getElementById("calcResult").innerHTML =
+    "Потрібно препарату: " + result.toFixed(2) + " л або кг.";
+}
+
+function sendMessage(){
+  let input = document.getElementById("userInput");
+  let text = input.value.trim();
+
+  if(text === "") return;
+
+  addMessage(text, "user");
+
+  let answer = getBotAnswer(text);
+  setTimeout(function(){
+    addMessage(answer, "bot");
+  }, 600);
+
+  input.value = "";
+}
+
+function addMessage(text, type){
+  let chat = document.getElementById("chatWindow");
+  let div = document.createElement("div");
+  div.className = "message " + type;
+  div.innerHTML = text;
+  chat.appendChild(div);
+  chat.scrollTop = chat.scrollHeight;
+}
+
+function getBotAnswer(question){
+  question = question.toLowerCase();
+
+  if(question.includes("совка") || question.includes("гусениц")){
+    return "При пошкодженні соняшнику совкою потрібно провести обстеження поля, визначити чисельність шкідника, фазу культури та ступінь пошкодження. Для контролю застосовують інсектициди на основі піретроїдів, неонікотиноїдів або діамідів відповідно до регламенту препарату.";
+  }
+
+  if(question.includes("соняшник")){
+    return "Для соняшнику ключові елементи захисту: протруювання насіння, ґрунтовий або страховий гербіцид, контроль вовчка, фунгіцидний захист від фомозу, фомопсису, склеротиніозу та моніторинг совок.";
+  }
+
+  if(question.includes("пшениц")){
+    return "Для пшениці важливі: протруйник насіння, гербіцидний захист у фазі кущення, фунгіцидний контроль септоріозу, іржі та фузаріозу колосу, а також моніторинг попелиць і клопа шкідливої черепашки.";
+  }
+
+  if(question.includes("кукурудз")){
+    return "Для кукурудзи система захисту включає контроль злакових і дводольних бур’янів, моніторинг стеблового метелика, захист від сажкових хвороб і листкових плямистостей.";
+  }
+
+  if(question.includes("сорго")){
+    return "Для сорго критично важливі чисте поле на старті, правильна густота стояння, контроль бур’янів у ранні фази та моніторинг попелиць, цикадок і стеблових шкідників.";
+  }
+
+  if(question.includes("гербіцид")){
+    return "Гербіцид потрібно підбирати за культурою, фазою розвитку, спектром бур’янів, типом ґрунту, вологістю та післядією на наступні культури в сівозміні.";
+  }
+
+  if(question.includes("фунгіцид")){
+    return "Фунгіцидний захист планують за фітосанітарним моніторингом, фазою культури, погодними умовами та ризиком розвитку патогенів. Часто використовують триазоли, стробілурини та карбоксаміди.";
+  }
+
+  if(question.includes("інсектицид")){
+    return "Інсектицид застосовують після моніторингу шкідника та досягнення економічного порогу шкодочинності. Важливо враховувати температуру, фазу культури, регламент і захист ентомофагів.";
+  }
+
+  return "Я можу допомогти з темами: соняшник, пшениця, кукурудза, сорго, совка, гербіциди, фунгіциди, інсектициди, хвороби та шкідники. Напишіть питання конкретніше.";
+}
+
+document.getElementById("userInput").addEventListener("keypress", function(event){
+  if(event.key === "Enter"){
+    sendMessage();
+  }
+});
+</script>
 
 </body>
 </html>
+```
+
