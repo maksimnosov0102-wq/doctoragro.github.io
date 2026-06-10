@@ -1,17 +1,21 @@
 export default async function handler(req, res) {
-
   if (req.method !== "POST") {
-    return res.status(405).json({
-      error: "Method not allowed"
-    });
+    return res.status(405).json({ answer: "Дозволено тільки POST-запити." });
   }
 
   try {
-
     const { message } = req.body;
 
+    const apiKey = process.env.GEMINI_API_KEY;
+
+    if (!apiKey) {
+      return res.status(200).json({
+        answer: "Помилка: GEMINI_API_KEY не знайдено у Vercel."
+      });
+    }
+
     const response = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${process.env.GEMINI_API_KEY}`,
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`,
       {
         method: "POST",
         headers: {
@@ -22,29 +26,10 @@ export default async function handler(req, res) {
             {
               parts: [
                 {
-                  text: `
-Ти AgroDoctor AI.
+                  text: `Ти AgroDoctor AI — агрономічний консультант українською мовою. 
+Відповідай практично, по темі захисту рослин: хвороби, шкідники, гербіциди, фунгіциди, інсектициди, соняшник, кукурудза, пшениця, сорго.
 
-Ти професійний агрономічний консультант.
-
-Відповідай українською мовою.
-
-Спеціалізація:
-- соняшник
-- кукурудза
-- пшениця
-- сорго
-- хвороби рослин
-- шкідники
-- гербіциди
-- фунгіциди
-- інсектициди
-- технології захисту рослин
-
-Питання користувача:
-
-${message}
-`
+Питання користувача: ${message}`
                 }
               ]
             }
@@ -57,19 +42,14 @@ ${message}
 
     const answer =
       data?.candidates?.[0]?.content?.parts?.[0]?.text ||
-      "Не вдалося отримати відповідь.";
+      data?.error?.message ||
+      "Gemini не повернув текстову відповідь.";
 
-    res.status(200).json({
-      answer
-    });
+    return res.status(200).json({ answer });
 
   } catch (error) {
-
-    res.status(500).json({
-      answer: "Помилка сервера.",
-      error: error.message
+    return res.status(200).json({
+      answer: "Помилка сервера: " + error.message
     });
-
   }
-
 }
