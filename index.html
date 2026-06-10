@@ -563,20 +563,45 @@ function calculateProduct(){
     "Потрібно препарату: " + result.toFixed(2) + " л або кг.";
 }
 
-function sendMessage(){
-  let input = document.getElementById("userInput");
-  let text = input.value.trim();
+async function sendMessage(){
 
-  if(text === "") return;
+let input = document.getElementById("userInput");
+let text = input.value.trim();
 
-  addMessage(text, "user");
+if(text === "") return;
 
-  let answer = getBotAnswer(text);
-  setTimeout(function(){
-    addMessage(answer, "bot");
-  }, 600);
+addMessage(text, "user");
 
-  input.value = "";
+addMessage("AgroDoctor AI аналізує запит...", "bot");
+
+try{
+
+const response = await fetch("/api/chat",{
+method:"POST",
+headers:{
+"Content-Type":"application/json"
+},
+body:JSON.stringify({
+message:text
+})
+});
+
+const data = await response.json();
+
+const messages = document.querySelectorAll(".message.bot");
+messages[messages.length-1].innerHTML =
+data.answer || "Не вдалося отримати відповідь.";
+
+}catch(error){
+
+const messages = document.querySelectorAll(".message.bot");
+messages[messages.length-1].innerHTML =
+"Помилка підключення до AI.";
+
+}
+
+input.value = "";
+
 }
 
 function addMessage(text, type){
