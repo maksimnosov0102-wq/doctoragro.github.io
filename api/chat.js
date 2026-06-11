@@ -21,7 +21,7 @@ export default async function handler(req, res) {
         "X-Title": "AgroDoctor AI"
       },
       body: JSON.stringify({
-        model: "deepseek/deepseek-r1:free",
+        model: "nex-agi/nex-n2-pro:free",
         messages: [
           {
             role: "system",
