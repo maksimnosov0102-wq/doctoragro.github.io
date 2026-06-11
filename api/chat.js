@@ -1,37 +1,34 @@
 export default async function handler(req, res) {
+
   if (req.method !== "POST") {
-    return res.status(405).json({ answer: "Дозволено тільки POST-запити." });
+    return res.status(405).json({
+      error: "Method not allowed"
+    });
   }
 
   try {
+
     const { message } = req.body;
 
-    const apiKey = process.env.GEMINI_API_KEY;
-
-    if (!apiKey) {
-      return res.status(200).json({
-        answer: "Помилка: GEMINI_API_KEY не знайдено у Vercel."
-      });
-    }
-
     const response = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`,
+      "https://openrouter.ai/api/v1/chat/completions",
       {
         method: "POST",
         headers: {
+          "Authorization": `Bearer ${process.env.OPENROUTER_API_KEY}`,
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
-          contents: [
+          model: "deepseek/deepseek-chat-v3-0324:free",
+          messages: [
             {
-              parts: [
-                {
-                  text: `Ти AgroDoctor AI — агрономічний консультант українською мовою. 
-Відповідай практично, по темі захисту рослин: хвороби, шкідники, гербіциди, фунгіциди, інсектициди, соняшник, кукурудза, пшениця, сорго.
-
-Питання користувача: ${message}`
-                }
-              ]
+              role: "system",
+              content:
+                "Ти AgroDoctor AI. Ти професійний агроном-консультант. Відповідай українською мовою."
+            },
+            {
+              role: "user",
+              content: message
             }
           ]
         })
@@ -40,16 +37,17 @@ export default async function handler(req, res) {
 
     const data = await response.json();
 
-    const answer =
-      data?.candidates?.[0]?.content?.parts?.[0]?.text ||
-      data?.error?.message ||
-      "Gemini не повернув текстову відповідь.";
-
-    return res.status(200).json({ answer });
+    res.status(200).json({
+      answer:
+        data.choices?.[0]?.message?.content ||
+        "Не вдалося отримати відповідь."
+    });
 
   } catch (error) {
-    return res.status(200).json({
-      answer: "Помилка сервера: " + error.message
+
+    res.status(500).json({
+      answer: error.message
     });
+
   }
 }
