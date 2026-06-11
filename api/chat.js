@@ -39,10 +39,9 @@ export default async function handler(req, res) {
 
     res.status(200).json({
       answer:
-        data.choices?.[0]?.message?.content ||
-        "Не вдалося отримати відповідь."
-    });
-
+       data.choices?.[0]?.message?.content ||
+data.choices?.[0]?.delta?.content ||
+data.error?.message ||
   } catch (error) {
 
     res.status(500).json({
